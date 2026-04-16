@@ -1,0 +1,46 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* CTA hover animations — applied to all Figma-exported buttons */
+[data-name="cta"] {
+  cursor: pointer;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              filter 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+[data-name="cta"]:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.04);
+  box-shadow:
+    0 8px 20px 0 rgba(0, 0, 0, 0.12),
+    0 4px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+[data-name="cta"]:active {
+  transform: translateY(-1px);
+  transition-duration: 80ms;
+}
+
+/* Arrow circle inside CTAs nudges right on hover */
+[data-name="cta"] [data-name="Arrow Circle"] {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-name="cta"]:hover [data-name="Arrow Circle"] {
+  transform: translateX(4px);
+}
+
+/* Header nav items */
+[data-name="Header"] [data-name="menu"],
+[data-name="Header"] [data-name="nav_item"] {
+  cursor: pointer;
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+[data-name="Header"] [data-name="menu"]:hover,
+[data-name="Header"] [data-name="nav_item"]:hover {
+  opacity: 0.7;
+}

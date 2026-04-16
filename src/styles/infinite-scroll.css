@@ -1,0 +1,95 @@
+/* Infinite Scroll Animation - 3 columns with different speeds */
+
+@keyframes scroll-col-1 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-1326px);
+  }
+}
+
+@keyframes scroll-col-2 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-1326px);
+  }
+}
+
+@keyframes scroll-col-3 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-1326px);
+  }
+}
+
+/* Scroll container - handles vertical scrolling with overflow */
+.scroll-container {
+  display: flex;
+  gap: 0;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Individual columns */
+.scroll-column {
+  width: 200px;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  will-change: transform;
+  flex-shrink: 0;
+}
+
+/* Column 1 - slowest speed (13s) */
+.scroll-column-1 {
+  animation: scroll-col-1 13s linear infinite;
+}
+
+/* Column 2 - medium speed (15s) */
+.scroll-column-2 {
+  animation: scroll-col-2 15s linear infinite;
+}
+
+/* Column 3 - fastest speed (17s) */
+.scroll-column-3 {
+  animation: scroll-col-3 17s linear infinite;
+}
+
+/* Image wrapper for proper sizing */
+.scroll-item {
+  flex-shrink: 0;
+  width: 100%;
+  height: 221px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Pause animation on hover for better UX (optional) */
+.scroll-column:hover {
+  animation-play-state: paused;
+}
+
+/* Maintain 60fps performance */
+@supports (image-rendering: crisp-edges) {
+  .scroll-item {
+    image-rendering: crisp-edges;
+  }
+}

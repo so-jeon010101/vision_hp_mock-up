@@ -1,0 +1,68 @@
+/* Google Fonts - Lexend (English & Numbers) */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Google Fonts - Noto Sans JP (Japanese) */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;600;700;800;900&display=swap');
+
+/* Font Family Stack - Aligned with Figma Design */
+:root {
+  /* Hiragino Kaku Gothic variants with fallbacks — Lexend takes priority for Latin (numbers & English) */
+  --font-family-std-w3: 'Lexend', 'Hiragino Kaku Gothic Std', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-std-w6: 'Lexend', 'Hiragino Kaku Gothic Std', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-std-w8: 'Lexend', 'Hiragino Kaku Gothic Std', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-pro-w3: 'Lexend', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-pro-w6: 'Lexend', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-pro-w8: 'Lexend', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Unified base font — Lexend first so Latin glyphs use Lexend, Japanese falls through to Hiragino/Noto */
+  --font-family-base: 'Lexend', 'Hiragino Kaku Gothic Pro', 'Hiragino Kaku Gothic Std', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Alternate: Lexend for English-only content */
+  --font-family-en: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-ja: 'Hiragino Kaku Gothic Pro', 'Hiragino Kaku Gothic Std', 'Noto Sans JP', sans-serif;
+}
+
+/* Font weight utilities - Explicit rules for Tailwind with font-family */
+@layer base {
+  /* W8 (800) - Lexend for Latin, Hiragino Kaku Gothic Std for Japanese */
+  .font-extrabold {
+    font-weight: 800 !important;
+    font-family: 'Lexend', 'Hiragino Kaku Gothic Std', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  }
+
+  /* W6 (600) - Lexend for Latin, Hiragino Kaku Gothic Pro for Japanese */
+  .font-semibold {
+    font-weight: 600 !important;
+    font-family: 'Lexend', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  }
+
+  /* W3 (300) - Lexend for Latin, Hiragino Kaku Gothic Pro for Japanese */
+  .font-light {
+    font-weight: 300 !important;
+    font-family: 'Lexend', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  }
+  
+  .font-thin {
+    font-weight: 100 !important;
+  }
+  
+  .font-extralight {
+    font-weight: 200 !important;
+  }
+  
+  .font-normal {
+    font-weight: 400 !important;
+  }
+  
+  .font-medium {
+    font-weight: 500 !important;
+  }
+  
+  .font-bold {
+    font-weight: 700 !important;
+  }
+  
+  .font-black {
+    font-weight: 900 !important;
+  }
+}
