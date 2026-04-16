@@ -4969,7 +4969,7 @@ function Result() {
 function Tlt8() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-full" data-name="tlt">
-      <div className="flex flex-col font-bold justify-center leading-[0] relative shrink-0 text-[#137fec] text-[28px] text-center uppercase whitespace-nowrap">
+      <div className="flex flex-col font-bold justify-center leading-[0] relative shrink-0 text-[#137fec] text-[18px] lg:text-[28px] text-center uppercase whitespace-nowrap">
         <p className="leading-[1.3]">PROCESS</p>
       </div>
       <div className="bg-[#137fec] h-[8px] shrink-0 w-[120px]" />
@@ -5010,9 +5010,9 @@ function Label2() {
 
 function Frame122() {
   return (
-    <div className="content-stretch flex items-center relative shrink-0 w-[1117px]">
-      <div className="bg-white flex-[1_0_0] min-h-px min-w-px relative rounded-[24px]" data-name="flow">
-        <div aria-hidden="true" className="absolute border-[#eaeaea] border-dashed border-r inset-0 pointer-events-none rounded-[24px]" />
+    <div className="content-stretch flex flex-col lg:flex-row items-stretch lg:items-center gap-[16px] lg:gap-0 relative shrink-0 w-full lg:w-[1117px]">
+      <div className="bg-white w-full lg:flex-[1_0_0] lg:min-h-px lg:min-w-px relative rounded-[24px]" data-name="flow">
+        <div aria-hidden="true" className="hidden lg:block absolute border-[#eaeaea] border-dashed border-r inset-0 pointer-events-none rounded-[24px]" />
         <div className="flex flex-col items-center size-full">
           <div className="content-stretch flex flex-col gap-[16px] items-center p-[24px] relative size-full">
             <Label />
@@ -5020,12 +5020,12 @@ function Frame122() {
             <div className="h-[240px] relative rounded-[12px] shrink-0 w-full">
               <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full" src={imgRectangle40} />
             </div>
-            <p className=" h-[78px] leading-[1.6] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">お客様のご要望や課題を丁寧にヒヤリング。どんな小さなことでも、まず気軽に話してみてください。</p>
+            <p className=" lg:h-[78px] leading-[1.6] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">お客様のご要望や課題を丁寧にヒヤリング。どんな小さなことでも、まず気軽に話してみてください。</p>
           </div>
         </div>
       </div>
-      <div className="bg-white flex-[1_0_0] min-h-px min-w-px relative rounded-[24px]" data-name="flow">
-        <div aria-hidden="true" className="absolute border-[#eaeaea] border-dashed border-r inset-0 pointer-events-none rounded-[24px]" />
+      <div className="bg-white w-full lg:flex-[1_0_0] lg:min-h-px lg:min-w-px relative rounded-[24px]" data-name="flow">
+        <div aria-hidden="true" className="hidden lg:block absolute border-[#eaeaea] border-dashed border-r inset-0 pointer-events-none rounded-[24px]" />
         <div className="flex flex-col items-center size-full">
           <div className="content-stretch flex flex-col gap-[16px] items-center p-[24px] relative size-full">
             <Label1 />
@@ -5033,11 +5033,11 @@ function Frame122() {
             <div className="h-[240px] relative rounded-[12px] shrink-0 w-full">
               <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full" src={imgRectangle41} />
             </div>
-            <p className=" h-[78px] leading-[1.6] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">ヒヤリング内容をもとに制作を進めていきます。途中でも確認いただけるので、安心してお任せください。</p>
+            <p className=" lg:h-[78px] leading-[1.6] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">ヒヤリング内容をもとに制作を進めていきます。途中でも確認いただけるので、安心してお任せください。</p>
           </div>
         </div>
       </div>
-      <div className="bg-white flex-[1_0_0] min-h-px min-w-px relative rounded-[24px]" data-name="flow">
+      <div className="bg-white w-full lg:flex-[1_0_0] lg:min-h-px lg:min-w-px relative rounded-[24px]" data-name="flow">
         <div className="flex flex-col items-center size-full">
           <div className="content-stretch flex flex-col gap-[16px] items-center p-[24px] relative size-full">
             <Label2 />
@@ -5045,7 +5045,7 @@ function Frame122() {
             <div className="h-[240px] relative rounded-[12px] shrink-0 w-full">
               <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full" src={imgRectangle42} />
             </div>
-            <p className=" h-[78px] leading-[1.6] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">サイト完成で、すぐに公開へ。その後の運用も安心で、いつでもサポートでお気軽にご相談できます。</p>
+            <p className=" lg:h-[78px] leading-[1.6] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">サイト完成で、すぐに公開へ。その後の運用も安心で、いつでもサポートでお気軽にご相談できます。</p>
           </div>
         </div>
       </div>
@@ -5055,7 +5055,7 @@ function Frame122() {
 
 function Process() {
   return (
-    <div className="bg-[#f5f8fc] content-stretch flex flex-col gap-[24px] lg:gap-[40px] items-center overflow-clip px-[16px] lg:px-0 py-[60px] lg:py-[100px] relative shrink-0 w-full" data-name="process">
+    <div className="bg-[#f5f8fc] content-stretch flex flex-col gap-[48px] lg:gap-[40px] items-center overflow-clip px-[16px] lg:px-0 py-[64px] lg:py-[100px] relative shrink-0 w-full" data-name="process">
       <Tlt8 />
       <Frame122 />
     </div>
