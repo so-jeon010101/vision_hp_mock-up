@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import { motion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 import svgPaths from "./svg-pkqay5en87";
 import imgPixta134083016M1 from "../assets/bg.png";
@@ -16,7 +17,7 @@ import imgImage11 from "figma:asset/cb1ea35c9a04ed4acf6bcb7c8c0fc48d01fb8712.png
 import imgImage12 from "figma:asset/e2a21058d851b33509039ed9bdc20b2a831b0e6c.png";
 import imgImage13 from "figma:asset/587fac379a98b55c9873cb6b3efb9132bc7918cc.png";
 import imgImage14 from "figma:asset/bdfaaebfb305c161fee11b833ef652a8f4a7853e.png";
-import imgCanvas from "figma:asset/9cc8457500bb81fea4d5681a5fec6f26b0360001.png";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import imgVisionHpCase011 from "figma:asset/734c1b5b6d6bf7571dd917e735b8eb2b5030c57e.png";
 import imgVisionHpCaseSp021 from "figma:asset/71f398ee96dbcb325f7587d266dca9ea177b1f8b.png";
 import imgVisionHpCase12 from "figma:asset/cadf73cf16547e7bd394da6f1479be05921122d0.png";
@@ -50,36 +51,61 @@ import imgRectangle31 from "figma:asset/ee71b0967ab1f156cec97b3a44d085054cfd369f
 import imgRectangle32 from "figma:asset/e052a0e0c7a440c97548103ab75d1ca3e1845276.png";
 import imgRectangle33 from "figma:asset/e442c4fb852ef6a5a1860c272cfa7aff9505696b.png";
 import imgRectangle34 from "figma:asset/c3062f1e1bf2a069fa5e95efb3b59a0872a8fa3c.png";
+import imgBgKv from "@/assets/bg-kv.jpg";
+import imgDeco from "@/assets/deco.png";
+import imgBadge1 from "@/assets/kv-badges/badge-1.svg";
+import imgBadge2 from "@/assets/kv-badges/badge-2.svg";
+import imgBadge3 from "@/assets/kv-badges/badge-3.svg";
+import imgBadge4 from "@/assets/kv-badges/badge-4.svg";
 import { imgDrafts } from "./svg-279bb";
+
+function Layer1Badges() {
+  return (
+    <div className="flex gap-[8px] items-center shrink-0" data-name="Layer_1">
+      <img alt="累計10,000社超の導入実績" src={imgBadge1} className="size-[88px] shrink-0" />
+      <img alt="最短2週間で完成" src={imgBadge2} className="size-[88px] shrink-0" />
+      <img alt="24時間受付対応" src={imgBadge3} className="size-[88px] shrink-0" />
+      <img alt="初期費用0円" src={imgBadge4} className="size-[88px] shrink-0" />
+    </div>
+  );
+}
 
 function Frame113() {
   return (
-    <div className="content-stretch flex flex-col items-center lg:items-start pb-[31px] relative shrink-0">
-      <div className="flex flex-col  justify-center leading-[0] mb-[-31px] not-italic relative shrink-0 text-[#2d3748] font-extrabold text-[32px] lg:text-[clamp(40px,3.89vw,56px)] text-center lg:text-left whitespace-nowrap">
-        <p className="leading-[1.4] mb-0">立ち上げから</p>
-        <p className="leading-[1.4]">ビジネスが加速する</p>
+    <div className="content-stretch flex flex-col items-center lg:items-start relative shrink-0 w-full lg:w-auto">
+      {/* Line 1-2: ホームページを作るだけで / 終わらせない。 */}
+      <div className="font-extrabold not-italic text-[#2d3748] text-center lg:text-left whitespace-nowrap">
+        <p className="leading-[1.4] mb-0 text-[28px] lg:text-[clamp(26px,2.22vw,44px)]">
+          <span className="text-[#137fec]">ホームページを作る</span>だけで
+        </p>
+        <p className="leading-[1.4] text-[28px] lg:text-[clamp(26px,2.22vw,44px)]">終わらせない。</p>
       </div>
-      <div className="h-[33px] mb-[-31px] relative shrink-0 w-full lg:w-[clamp(416px,40.6vw,585px)]">
-        <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 585 33">
-          <g id="Rectangle 40" opacity="0.2" style={{ mixBlendMode: "plus-darker" }}>
-            <path d="M0 0L585 32.175V33H0V0Z" fill="var(--fill-0, #137FEC)" />
-          </g>
-        </svg>
+      {/* Mobile: 2-line (集客まで、 / まるごとお任せ ください。) */}
+      <div className="lg:hidden flex flex-col items-center">
+        <p className="font-extrabold leading-[1.4] text-[#2d3748] text-[28px] whitespace-nowrap">
+          <span className="text-[#137fec]">集客</span>まで、
+        </p>
+        <div className="flex items-center justify-center">
+          <span className="bg-[#ffe347] font-extrabold leading-[1.4] text-[#2d3748] text-[28px] whitespace-nowrap px-[6px]">まるごとお任せ</span>
+          <span className="font-extrabold leading-[1.4] text-[#2d3748] text-[28px] whitespace-nowrap">ください。</span>
+        </div>
       </div>
+      {/* Desktop: 1-line inline (集客まで、まるごとお任せください。) */}
+      <p className="hidden lg:block font-extrabold leading-[1.4] text-[#2d3748] text-[clamp(26px,2.22vw,44px)] whitespace-nowrap">
+        <span className="text-[#137fec]">集客</span>まで、<span className="bg-[#ffe347] px-[6px]">まるごとお任せ</span>ください。
+      </p>
     </div>
   );
 }
 
 function Frame108() {
   return (
-    <div className="content-stretch flex flex-col items-center lg:items-start relative shrink-0 w-full lg:w-auto">
+    <div className="content-stretch flex flex-col items-center lg:items-start gap-[16px] relative shrink-0 w-full lg:w-auto">
+      <Layer1Badges />
       <Frame113 />
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] font-extrabold text-[32px] lg:text-[clamp(40px,3.89vw,56px)] text-center lg:text-left whitespace-nowrap">
-        <p className="leading-[1.4]">WEB運用するなら</p>
-      </div>
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] font-light text-[16px] lg:text-[clamp(17px,1.67vw,24px)] text-center lg:text-left whitespace-nowrap">
-        <p className="leading-[1.4] mb-0">中小企業、累計10,000社超の導入実績。</p>
-        <p className="leading-[1.4]">{`成果にこだわるホームページを制作&運用`}</p>
+      <div className="flex flex-col font-light justify-center not-italic relative shrink-0 text-[#2d3748] text-[14px] lg:text-[clamp(18px,1.53vw,30px)] text-center lg:text-left w-full lg:w-auto">
+        <p className="leading-[1.6] mb-0">制作から運用まで一社で完結。</p>
+        <p className="leading-[1.6]">担当者がゴールまで伴走します。</p>
       </div>
     </div>
   );
@@ -113,8 +139,8 @@ function ArrowCircle() {
 function Frame95() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col  items-center leading-[normal] min-h-px min-w-px not-italic relative text-[#00b5ad]">
-      <p className="relative shrink-0 font-semibold text-[20px] tracking-[0.4px] w-full">今すぐ無料相談する</p>
-      <p className="relative shrink-0 text-[12px] tracking-[0.24px] w-full">24時間受付対応 · 全国対応可能</p>
+      <p className="relative shrink-0 font-semibold text-[17.5px] tracking-[0.35px] w-full">今すぐ無料相談する</p>
+      <p className="relative shrink-0 text-[10.5px] tracking-[0.21px] w-full">24時間受付対応 · 全国対応可能</p>
     </div>
   );
 }
@@ -131,20 +157,20 @@ function ArrowCircle1() {
 
 function Cta() {
   return (
-    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] shrink-0 w-full lg:w-[320px] block no-underline" data-name="cta">
-      <div className="content-stretch flex items-center justify-between overflow-clip pl-[32px] pr-[16px] py-[16px] relative rounded-[inherit] size-full">
+    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] block no-underline w-full max-w-[300px]" data-name="cta">
+      <div className="content-stretch flex items-center justify-between overflow-clip pl-[28px] pr-[14px] py-[14px] relative rounded-[inherit] size-full">
         <Frame95 />
         <ArrowCircle1 />
       </div>
-      <div aria-hidden="true" className="absolute border-2 border-[#00b5ad] border-solid inset-0 pointer-events-none rounded-[999px]" />
+      <div aria-hidden="true" className="absolute border border-[#00b5ad] border-solid inset-0 pointer-events-none rounded-[999px]" />
     </a>
   );
 }
 
 function Frame109() {
   return (
-    <div className="content-stretch flex flex-col lg:flex-row gap-[16px] items-stretch lg:items-center justify-center relative shrink-0 w-full">
-      <div className="flex-[1_0_0] max-h-[100px] lg:max-w-[400px] min-h-[80px] lg:min-w-[320px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)]" data-name="cta">
+    <div className="content-center flex flex-col lg:flex-row flex-wrap gap-[16px] items-center justify-center relative shrink-0 w-full">
+      <div className="max-h-[100px] min-h-[80px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)] w-full max-w-[400px] min-w-[320px] lg:flex-[1_0_0]" data-name="cta">
         <div aria-hidden="true" className="absolute bg-[#ff4343] inset-0 pointer-events-none rounded-[999px]" />
         <div className="flex flex-row items-center max-h-[inherit] max-w-[inherit] min-h-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-between max-h-[inherit] max-w-[inherit] min-h-[inherit] min-w-[inherit] pl-[32px] pr-[16px] py-[16px] relative size-full">
@@ -161,7 +187,7 @@ function Frame109() {
 
 function Frame110() {
   return (
-    <div className="relative lg:absolute content-stretch flex flex-col gap-[40px] items-start px-[16px] lg:px-0 pb-[50px] pt-[100px] lg:pb-0 lg:pt-0 lg:left-[clamp(40px,5vw,72px)] lg:top-[224.5px] w-full lg:w-[clamp(467px,45.5vw,656px)]">
+    <div className="relative content-stretch flex flex-col gap-[40px] items-center lg:items-start px-[16px] lg:px-0 pb-[50px] pt-[100px] lg:pb-0 lg:pt-0 w-full lg:flex-1 lg:min-w-px lg:max-w-[clamp(460px,45.5vw,900px)]">
       <Frame108 />
       <Frame109 />
     </div>
@@ -236,10 +262,9 @@ function HeroImageContainer() {
 
   return (
     <>
-      {/* Desktop: 3 columns, absolute positioned */}
+      {/* Desktop: 3 columns as flex slot, 600x800 */}
       <div
-        className="hidden lg:flex absolute bottom-0 right-0 h-[800px] items-center justify-center overflow-hidden gap-0 pointer-events-none"
-        style={{ left: 'clamp(768px, calc(728px + 2.8vw), 828px)' }}
+        className="hidden lg:flex h-[800px] w-[clamp(420px,41.67vw,600px)] items-center justify-center overflow-hidden gap-0 pointer-events-none shrink-0 relative"
         data-name="HeroImage_container"
       >
         <HeroImageColumn columnImages={col1Images} duration={13000} delayMultiplier={0} />
@@ -260,15 +285,24 @@ function HeroImageContainer() {
 
 function Kv() {
   return (
-    <div className="bg-white lg:h-[800px] overflow-clip relative shrink-0 w-full" data-name="kv">
-      <div className="absolute h-[579px] w-[616px] lg:inset-0 lg:h-auto lg:w-auto mix-blend-multiply opacity-50 lg:opacity-100 lg:mix-blend-normal" data-name="pixta_134083016_M 1">
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgPixta134083016M1} />
-          <div className="lg:hidden absolute bg-gradient-to-b from-[63%] from-[rgba(255,255,255,0)] inset-0 to-[78%] to-white" />
-        </div>
+    <div className="bg-white relative shrink-0 w-full overflow-clip lg:h-[800px]" data-name="kv">
+      {/* Tiled pattern background */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-50"
+        data-name="bg"
+        style={{
+          backgroundImage: `url(${imgBgKv})`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "25px 25px",
+        }}
+      />
+      {/* Fade to white at bottom for readability */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[63%] from-[rgba(255,255,255,0)] to-[85%] to-white" />
+      {/* Content — flex layout per new design, centered within max-width */}
+      <div className="relative mx-auto h-full w-full max-w-[1920px] lg:flex lg:content-center lg:flex-wrap lg:gap-[40px] lg:items-center lg:justify-center lg:px-[40px]">
+        <Frame110 />
+        <HeroImageContainer />
       </div>
-      <Frame110 />
-      <HeroImageContainer />
     </div>
   );
 }
@@ -304,16 +338,21 @@ function Caption() {
 
 function Text() {
   return (
-    <div className="content-stretch flex flex-col gap-[16px] lg:h-[229px] items-center lg:items-start justify-end relative shrink-0" data-name="text">
+    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-start justify-center lg:justify-end relative shrink-0 w-full lg:w-auto max-w-[636px] lg:max-w-none lg:h-[229px] mx-auto lg:mx-0" data-name="text">
       <Caption />
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] font-extrabold text-[24px] lg:text-[32px] lg:whitespace-nowrap">
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] lg:text-[#62666c] font-extrabold text-[24px] lg:text-[32px] text-center lg:text-left w-full lg:w-auto lg:whitespace-nowrap">
         <p className="leading-[1.4]">上場企業かつ、数万社の実績</p>
       </div>
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] text-[18px] whitespace-nowrap">
-        <p className="leading-[1.7] mb-0">値段の安い制作サービスは数多くあります。</p>
-        <p className="leading-[1.7] mb-0">値段よりも大切なのは、それぞれのタイミングで経営者がやりたことができるかどうか。</p>
-        <p className="leading-[1.7] mb-0">当社は新規立ち上げや作り替え、テストマーケティングから</p>
-        <p className="leading-[1.7]">本格運用まで幅広いニーズにお応えしてきました。</p>
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] text-[18px] text-center lg:text-left w-full lg:w-auto">
+        <p className="lg:hidden leading-[1.7]">
+          値段の安い制作サービスは数多くあります。値段よりも大切なのは、それぞれのタイミングで経営者がやりたことができるかどうか。当社は新規立ち上げや作り替え、テストマーケティングから本格運用まで幅広いニーズにお応えしてきました。
+        </p>
+        <div className="hidden lg:block whitespace-nowrap">
+          <p className="leading-[1.7] mb-0">値段の安い制作サービスは数多くあります。</p>
+          <p className="leading-[1.7] mb-0">値段よりも大切なのは、それぞれのタイミングで経営者がやりたことができるかどうか。</p>
+          <p className="leading-[1.7] mb-0">当社は新規立ち上げや作り替え、テストマーケティングから</p>
+          <p className="leading-[1.7]">本格運用まで幅広いニーズにお応えしてきました。</p>
+        </div>
       </div>
     </div>
   );
@@ -321,9 +360,9 @@ function Text() {
 
 function Container() {
   return (
-    <div className="content-stretch flex gap-[32px] items-center relative shrink-0 w-full" data-name="container">
+    <div className="content-stretch flex items-center justify-center lg:justify-start lg:gap-[32px] relative shrink-0 w-full" data-name="container">
       <Text />
-      <div className="-translate-y-1/2 absolute flex flex-col font-thin justify-center leading-[0] opacity-10 right-[208px] text-[#2d3748] text-[100px] lg:text-[200px] top-[calc(50%+0.5px)] translate-x-full whitespace-nowrap">
+      <div className="hidden lg:flex -translate-y-1/2 absolute flex-col font-thin justify-center leading-[0] opacity-10 right-[208px] text-[#2d3748] text-[200px] top-[calc(50%+0.5px)] translate-x-full whitespace-nowrap">
         <p className="leading-none">01</p>
       </div>
     </div>
@@ -333,7 +372,40 @@ function Container() {
 function Canvas() {
   return (
     <div className="relative shrink-0 size-[300px]" data-name="Canvas">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgCanvas} />
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={CHART_LEGEND_DATA}
+            dataKey={(d) => parseFloat(d.value)}
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius={80}
+            outerRadius={140}
+            paddingAngle={0}
+            stroke="#fff"
+            strokeWidth={2}
+            isAnimationActive={false}
+          >
+            {CHART_LEGEND_DATA.map((item) => (
+              <Cell key={item.name} fill={item.color} />
+            ))}
+          </Pie>
+          <Tooltip
+            cursor={false}
+            formatter={(value: number, name: string) => [`${value}%`, name]}
+            contentStyle={{
+              backgroundColor: "rgba(45,55,72,0.95)",
+              border: "none",
+              borderRadius: "8px",
+              padding: "8px 12px",
+              fontSize: "14px",
+            }}
+            itemStyle={{ color: "#fff" }}
+            labelStyle={{ color: "#fff" }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }
@@ -423,7 +495,7 @@ function Container7() {
   return (
     <div className="col-1 content-stretch flex gap-[10px] items-center justify-self-stretch py-[12px] relative row-4 self-start shrink-0" data-name="Container">
       <Text6 />
-      <p className="font-light leading-none not-italic relative shrink-0 text-[#2d3748] text-[16px] whitespace-nowrap">住宅・リフォーム・設備</p>
+      <p className="flex-[1_0_0] font-light leading-none min-w-px not-italic relative text-[#2d3748] text-[16px]">住宅・リフォーム・設備</p>
     </div>
   );
 }
@@ -565,7 +637,7 @@ function Container16() {
 
 function Container1() {
   return (
-    <div className="gap-x-[24px] grid grid-cols-[repeat(3,minmax(0,1fr))] grid-rows-[repeat(5,fit-content(100%))] h-[200px] max-w-[636px] relative shrink-0 w-full" data-name="Container">
+    <div className="gap-x-[24px] grid grid-cols-[repeat(3,minmax(0,1fr))] grid-rows-[repeat(5,fit-content(100%))] max-w-[636px] relative shrink-0 w-full" data-name="Container">
       <Container2 />
       <Container3 />
       <Container4 />
@@ -587,7 +659,7 @@ function Container1() {
 
 function Frame39() {
   return (
-    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[32px] items-center justify-center max-w-[636px] min-h-px min-w-[320px] relative">
+    <div className="content-stretch flex flex-col gap-[32px] items-center justify-center max-w-[636px] min-h-px min-w-[320px] relative w-full lg:w-auto lg:flex-[1_0_0]">
       <Canvas />
       <Container1 />
     </div>
@@ -740,8 +812,8 @@ function Frame37() {
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-[-0.5px] pointer-events-none" />
       <div className="flex flex-row items-center size-full">
         <div className="content-stretch flex items-center p-[8px] relative size-full">
-          <div className="flex flex-[1_0_0] flex-col  justify-center leading-[0] min-h-px min-w-px not-italic relative text-[#2d3748] text-[18px] text-center">
-            <p className="leading-[normal]">その他</p>
+          <div className="flex flex-[1_0_0] flex-col font-semibold justify-center leading-[0] min-h-px min-w-px not-italic relative text-[#2d3748] text-[18px] text-center">
+            <p className="leading-[normal]">業種</p>
           </div>
         </div>
       </div>
@@ -755,8 +827,8 @@ function Frame38() {
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-[-0.5px] pointer-events-none" />
       <div className="flex flex-row items-center size-full">
         <div className="content-stretch flex items-center p-[8px] relative size-full">
-          <div className="flex flex-[1_0_0] flex-col  justify-center leading-[0] min-h-px min-w-px not-italic relative text-[#2d3748] text-[18px] text-center">
-            <p className="leading-[normal]">その他</p>
+          <div className="flex flex-[1_0_0] flex-col font-semibold justify-center leading-[0] min-h-px min-w-px not-italic relative text-[#2d3748] text-[18px] text-center">
+            <p className="leading-[normal]">割合</p>
           </div>
         </div>
       </div>
@@ -1046,7 +1118,7 @@ function Inner14() {
 
 function Frame21() {
   return (
-    <div className="bg-white flex-[1_0_0] grid grid-cols-[repeat(2,minmax(0,1fr))] grid-rows-[________________42px_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] h-[700px] max-w-[500px] min-h-px min-w-[320px] relative">
+    <div className="bg-white grid grid-cols-[repeat(2,minmax(0,1fr))] grid-rows-[42px_repeat(15,minmax(0,1fr))] h-[700px] max-w-[500px] min-h-px min-w-[320px] relative w-full lg:w-auto lg:flex-[1_0_0]">
       <Frame22 />
       <div className="col-2 justify-self-stretch relative row-2 self-stretch shrink-0" data-name="tr">
         <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-[-0.5px] pointer-events-none" />
@@ -1188,18 +1260,65 @@ function Frame21() {
   );
 }
 
+const CHART_LEGEND_DATA: { color: string; name: string; value: string }[] = [
+  { color: "#4E79A7", name: "その他", value: "17.70" },
+  { color: "#F28E2B", name: "サービス業", value: "14.30" },
+  { color: "#59A14F", name: "建設・工業", value: "11.80" },
+  { color: "#E15759", name: "住宅・リフォーム・設備", value: "10.70" },
+  { color: "#76B7B2", name: "介護福祉保育", value: "10.30" },
+  { color: "#EDC948", name: "卸売・小売", value: "6.90" },
+  { color: "#B07AA1", name: "不動産", value: "6.00" },
+  { color: "#FF9DA7", name: "製造業", value: "5.30" },
+  { color: "#9C755F", name: "飲食業", value: "3.90" },
+  { color: "#499894", name: "美容", value: "2.70" },
+  { color: "#86BCB6", name: "教育", value: "2.60" },
+  { color: "#D37295", name: "士業", value: "2.50" },
+  { color: "#A0CBE8", name: "リラク鍼灸整骨", value: "2.40" },
+  { color: "#FABFD2", name: "医療", value: "2.20" },
+  { color: "#BAB0AC", name: "保険業", value: "0.60" },
+];
+
+function ChartWithLegend() {
+  return (
+    <div className="content-center flex flex-wrap gap-[32px] items-center justify-center p-[16px] relative w-full max-w-[1200px] mx-auto" data-name="chart_with_legend">
+      <Canvas />
+      <div className="content-start flex flex-[1_0_0] flex-wrap gap-0 items-start min-w-[320px] relative">
+        {CHART_LEGEND_DATA.map((item) => (
+          <div
+            key={item.name}
+            className="content-stretch flex flex-[1_0_0] gap-[10px] items-center max-w-[400px] min-w-[300px] py-[12px] relative"
+            data-name="Container"
+          >
+            <div className="size-[16px] shrink-0" style={{ backgroundColor: item.color }} />
+            <p className="font-light leading-none not-italic text-[#2d3748] text-[16px] whitespace-nowrap shrink-0">
+              {item.name}
+            </p>
+            <div className="flex gap-[4px] items-center text-[#2d3748] whitespace-nowrap shrink-0">
+              <span className="font-medium text-[20px] leading-none">{item.value}</span>
+              <span className="font-semibold text-[18px] leading-[1.7]">%</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Frame115() {
   return (
-    <div className="content-center flex flex-wrap gap-[40px] h-[700px] items-center justify-center min-h-[700px] min-w-[320px] relative shrink-0 w-full">
-      <Frame39 />
-      <Frame21 />
+    <div className="content-center flex flex-col items-center justify-center min-w-[320px] relative shrink-0 w-full">
+      <ChartWithLegend />
+      {/* table_old — hidden for now, may be restored later */}
+      <div className="hidden" data-name="table_old">
+        <Frame21 />
+      </div>
     </div>
   );
 }
 
 function Frame40() {
   return (
-    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[54px] items-end justify-center min-h-px min-w-px relative">
+    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[54px] items-center justify-center min-h-px min-w-px relative">
       <Container />
       <Frame115 />
     </div>
@@ -1227,18 +1346,23 @@ function Caption1() {
 
 function Frame18() {
   return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-end relative shrink-0 w-full">
+    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-end justify-center relative shrink-0 w-full max-w-[636px] lg:max-w-none mx-auto lg:mx-0">
       <Caption1 />
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] font-extrabold text-[24px] lg:text-[32px] lg:whitespace-nowrap">
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] lg:text-[#62666c] font-extrabold text-[24px] lg:text-[32px] text-center lg:text-right w-full lg:w-auto lg:whitespace-nowrap">
         <p className="leading-[1.4]">「はじめての不安」を徹底的に払拭！</p>
       </div>
-      <div className="flex flex-col  justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[#62666c] text-[14px] lg:text-[18px] text-center lg:text-right w-full lg:w-[min-content]">
-        <p className="leading-[1.7] mb-0">初めてのホームページ作成は、わからないことだらけで当然です。</p>
-        <p className="leading-[1.7] mb-0">ホームページドットコムは、そんなお客様の不安を解消するために、</p>
-        <p className="leading-[1.7] mb-0">担当コンサルタントが丁寧にサポートします。</p>
-        <p className="leading-[1.7]">専門用語は使わず、お客様の目線でご説明しますのでご安心ください。</p>
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] text-[18px] text-center lg:text-right w-full lg:w-auto">
+        <p className="lg:hidden leading-[1.7]">
+          初めてのホームページ作成は、わからないことだらけで当然です。ホームページドットコムは、そんなお客様の不安を解消するために、担当コンサルタントが丁寧にサポートします。専門用語は使わず、お客様の目線でご説明しますのでご安心ください。
+        </p>
+        <div className="hidden lg:block">
+          <p className="leading-[1.7] mb-0">初めてのホームページ作成は、わからないことだらけで当然です。</p>
+          <p className="leading-[1.7] mb-0">ホームページドットコムは、そんなお客様の不安を解消するために、</p>
+          <p className="leading-[1.7] mb-0">担当コンサルタントが丁寧にサポートします。</p>
+          <p className="leading-[1.7]">専門用語は使わず、お客様の目線でご説明しますのでご安心ください。</p>
+        </div>
       </div>
-      <div className="-translate-y-1/2 absolute flex flex-col font-thin justify-center leading-[0] left-0 opacity-10 text-[#2d3748] text-[100px] lg:text-[200px] top-[calc(50%+0.5px)] whitespace-nowrap">
+      <div className="hidden lg:flex -translate-y-1/2 absolute flex-col font-thin justify-center leading-[0] left-0 opacity-10 text-[#2d3748] text-[200px] top-[calc(50%+0.5px)] whitespace-nowrap">
         <p className="leading-none">02</p>
       </div>
     </div>
@@ -2200,20 +2324,20 @@ function Frame141() {
 
 function Frame139() {
   return (
-    <div className="content-stretch flex flex-col lg:flex-row gap-[16px] lg:gap-0 items-start relative shrink-0 w-full">
-      <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-end min-h-px min-w-px relative" data-name="reslove">
+    <div className="content-stretch flex flex-col lg:flex-row gap-[16px] lg:gap-0 items-stretch lg:items-start relative shrink-0 w-full">
+      <div className="content-stretch flex gap-[16px] items-end min-h-px min-w-px relative w-full max-w-[420px] mx-auto lg:max-w-none lg:mx-0 lg:w-auto lg:flex-[1_0_0]" data-name="reslove">
         <Image />
         <div className="flex flex-[1_0_0] flex-row items-end self-stretch">
           <Frame136 />
         </div>
       </div>
-      <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-end min-h-px min-w-px relative" data-name="reslove">
+      <div className="content-stretch flex gap-[16px] items-end min-h-px min-w-px relative w-full max-w-[420px] mx-auto lg:max-w-none lg:mx-0 lg:w-auto lg:flex-[1_0_0]" data-name="reslove">
         <Image1 />
         <div className="flex flex-[1_0_0] flex-row items-end self-stretch">
           <Frame137 />
         </div>
       </div>
-      <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-end min-h-px min-w-px relative" data-name="reslove">
+      <div className="content-stretch flex gap-[16px] items-end min-h-px min-w-px relative w-full max-w-[420px] mx-auto lg:max-w-none lg:mx-0 lg:w-auto lg:flex-[1_0_0]" data-name="reslove">
         <Image2 />
         <div className="flex flex-[1_0_0] flex-row items-end self-stretch">
           <Frame141 />
@@ -2225,7 +2349,7 @@ function Frame139() {
 
 function Component1() {
   return (
-    <div className="content-stretch flex flex-col gap-[32px] lg:gap-[54px] items-start relative shrink-0 w-full" data-name="2">
+    <div className="content-stretch flex flex-col gap-[32px] lg:gap-[54px] items-center lg:items-start relative shrink-0 w-full" data-name="2">
       <Frame18 />
       <Frame139 />
     </div>
@@ -2245,19 +2369,18 @@ function Caption2() {
 
 function Frame19() {
   return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-start relative shrink-0 w-full">
+    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-start justify-center relative shrink-0 w-full max-w-[636px] lg:max-w-none mx-auto lg:mx-0">
       <Caption2 />
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] font-extrabold text-[24px] lg:text-[32px] lg:whitespace-nowrap">
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] lg:text-[#62666c] font-extrabold text-[24px] lg:text-[32px] text-center lg:text-left w-full lg:w-auto lg:whitespace-nowrap">
         <p className="leading-[1.4]">経営者の「やりたい」が何でも叶う！</p>
       </div>
-      <div className="flex flex-col  justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[#62666c] text-[14px] lg:text-[18px] text-center lg:text-left w-full lg:w-[min-content]">
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] text-[18px] text-center lg:text-left w-full lg:w-auto">
         <p className="leading-[1.7]">
-          SEO・リスティング広告の戦略設計から運用改善まで対応。
-          <br aria-hidden="true" />
-          顧客獲得・採用強化など目的別に成果を最大化します。
+          <span className="lg:hidden">SEO・リスティング広告の戦略設計から運用改善まで対応。顧客獲得・採用強化など目的別に成果を最大化します。</span>
+          <span className="hidden lg:inline">SEO・リスティング広告の戦略設計から運用改善まで対応。<br aria-hidden="true" />顧客獲得・採用強化など目的別に成果を最大化します。</span>
         </p>
       </div>
-      <div className="-translate-y-1/2 absolute flex flex-col font-thin justify-center leading-[0] opacity-10 right-[233px] text-[#2d3748] text-[100px] lg:text-[200px] top-[calc(50%+0.5px)] translate-x-full whitespace-nowrap">
+      <div className="hidden lg:flex -translate-y-1/2 absolute flex-col font-thin justify-center leading-[0] opacity-10 right-[233px] text-[#2d3748] text-[200px] top-[calc(50%+0.5px)] translate-x-full whitespace-nowrap">
         <p className="leading-none">03</p>
       </div>
     </div>
@@ -2296,7 +2419,7 @@ function Illustration() {
 
 function IconText() {
   return (
-    <div className="aspect-[100/107] bg-[#f5f8fc] flex-[1_0_0] min-h-[342.3999938964844px] min-w-[320px] relative" data-name="icon+text">
+    <div className="bg-[#f5f8fc] min-h-[342.3999938964844px] min-w-[320px] relative w-full lg:w-auto lg:flex-[1_0_0] lg:aspect-[100/107]" data-name="icon+text">
       <div className="flex flex-col items-center justify-center min-h-[inherit] min-w-[inherit] size-full">
         <div className="content-stretch flex flex-col gap-[20px] items-center justify-center min-h-[inherit] min-w-[inherit] p-[20px] relative size-full">
           <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#3e607a] font-semibold text-[24px] text-center whitespace-nowrap">
@@ -2357,7 +2480,7 @@ function Illustration2() {
 
 function IconText1() {
   return (
-    <div className="aspect-[100/107] bg-[#f5f8fc] flex-[1_0_0] min-h-[342.3999938964844px] min-w-[320px] relative" data-name="icon+text">
+    <div className="bg-[#f5f8fc] min-h-[342.3999938964844px] min-w-[320px] relative w-full lg:w-auto lg:flex-[1_0_0] lg:aspect-[100/107]" data-name="icon+text">
       <div className="flex flex-col items-center justify-center min-h-[inherit] min-w-[inherit] size-full">
         <div className="content-stretch flex flex-col gap-[20px] items-center justify-center min-h-[inherit] min-w-[inherit] p-[20px] relative size-full">
           <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#3e607a] font-semibold text-[24px] text-center whitespace-nowrap">
@@ -2432,7 +2555,7 @@ function Illustration4() {
 
 function IconText2() {
   return (
-    <div className="aspect-[100/107] bg-[rgba(19,127,236,0.1)] flex-[1_0_0] min-h-[342.3999938964844px] min-w-[320px] relative" data-name="icon+text">
+    <div className="bg-[rgba(19,127,236,0.1)] min-h-[342.3999938964844px] min-w-[320px] relative w-full lg:w-auto lg:flex-[1_0_0] lg:aspect-[100/107]" data-name="icon+text">
       <div className="flex flex-col items-center justify-center min-h-[inherit] min-w-[inherit] size-full">
         <div className="content-stretch flex flex-col gap-[20px] items-center justify-center min-h-[inherit] min-w-[inherit] p-[20px] relative size-full">
           <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#137fec] font-semibold text-[24px] text-center whitespace-nowrap">
@@ -2454,7 +2577,7 @@ function IconText2() {
 
 function Frame41() {
   return (
-    <div className="content-stretch flex flex-col lg:flex-row gap-[24px] lg:gap-[54px] items-center relative shrink-0 w-full">
+    <div className="content-stretch flex flex-col lg:flex-row gap-[16px] lg:gap-[54px] items-stretch lg:items-center relative shrink-0 w-full">
       <IconText />
       <IconText1 />
       <IconText2 />
@@ -2464,7 +2587,7 @@ function Frame41() {
 
 function Component2() {
   return (
-    <div className="content-stretch flex flex-col gap-[32px] lg:gap-[54px] items-start relative shrink-0 w-full" data-name="3">
+    <div className="content-stretch flex flex-col gap-[32px] lg:gap-[54px] items-center lg:items-start relative shrink-0 w-full" data-name="3">
       <Frame19 />
       <Frame41 />
     </div>
@@ -2484,16 +2607,21 @@ function Caption3() {
 
 function Frame20() {
   return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-end relative shrink-0 w-full">
+    <div className="content-stretch flex flex-col gap-[16px] items-center lg:items-end justify-center relative shrink-0 w-full max-w-[636px] lg:max-w-none mx-auto lg:mx-0">
       <Caption3 />
-      <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] font-extrabold text-[24px] lg:text-[32px] lg:whitespace-nowrap">
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] lg:text-[#62666c] font-extrabold text-[24px] lg:text-[32px] text-center lg:text-right w-full lg:w-auto lg:whitespace-nowrap">
         <p className="leading-[1.4]">充実したオプション</p>
       </div>
-      <div className="flex flex-col  justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[#62666c] text-[14px] lg:text-[18px] text-center lg:text-right w-full lg:w-[min-content]">
-        <p className="leading-[1.7] mb-0">リソース・知識がなくても運営できるよう、</p>
-        <p className="leading-[1.7]">多彩なオプションを用意しております。</p>
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] text-[18px] text-center lg:text-right w-full lg:w-auto">
+        <p className="lg:hidden leading-[1.7]">
+          リソース・知識がなくても運営できるよう、多彩なオプションを用意しております。
+        </p>
+        <div className="hidden lg:block">
+          <p className="leading-[1.7] mb-0">リソース・知識がなくても運営できるよう、</p>
+          <p className="leading-[1.7]">多彩なオプションを用意しております。</p>
+        </div>
       </div>
-      <div className="-translate-y-1/2 absolute flex flex-col font-thin justify-center leading-[0] left-0 opacity-10 text-[#2d3748] text-[100px] lg:text-[200px] top-[calc(50%+0.49px)] whitespace-nowrap">
+      <div className="hidden lg:flex -translate-y-1/2 absolute flex-col font-thin justify-center leading-[0] left-0 opacity-10 text-[#2d3748] text-[200px] top-[calc(50%+0.49px)] whitespace-nowrap">
         <p className="leading-none">04</p>
       </div>
     </div>
@@ -2841,8 +2969,8 @@ function Group47() {
 
 function Deco() {
   return (
-    <div className="h-[130px] relative shrink-0 w-[200px]" data-name="deco">
-      <Group47 />
+    <div className="shrink-0 w-[200px] aspect-[402/265] relative" data-name="deco">
+      <img alt="ここまでやります" src={imgDeco} className="absolute inset-0 size-full object-contain" />
     </div>
   );
 }
@@ -2868,7 +2996,7 @@ function Frame43() {
 
 function Component3() {
   return (
-    <div className="content-stretch flex flex-col gap-[54px] items-start relative shrink-0 w-full" data-name="4">
+    <div className="content-stretch flex flex-col gap-[54px] items-center lg:items-start relative shrink-0 w-full" data-name="4">
       <Frame20 />
       <Frame43 />
     </div>
@@ -2897,17 +3025,20 @@ function Features() {
 
 function Tlt1() {
   return (
-    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[8px] items-center justify-center min-h-px min-w-px relative" data-name="tlt">
-      <div className="flex flex-col font-bold justify-center leading-[0] relative shrink-0 text-[#137fec] text-[28px] text-center uppercase whitespace-nowrap">
+    <div className="content-stretch flex flex-col gap-[8px] items-center justify-center min-h-px min-w-px relative w-full lg:flex-[1_0_0]" data-name="tlt">
+      <div className="flex flex-col font-bold justify-center leading-[0] relative shrink-0 text-[#137fec] text-[18px] lg:text-[28px] text-center uppercase whitespace-nowrap">
         <p className="leading-[1.3]">REASON</p>
       </div>
       <div className="bg-[#137fec] h-[8px] shrink-0 w-[120px]" />
-      <div className="flex flex-col  justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[#2d3748] font-extrabold text-[28px] lg:text-[40px] text-center w-[min-content]">
+      <div className="flex flex-col justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] font-extrabold text-[28px] lg:text-[40px] text-center w-full">
         <p className="leading-[1.4]">成果が出る５つの理由</p>
       </div>
-      <div className="flex flex-col font-light justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[#62666c] text-[14px] lg:text-[20px] text-center w-[min-content]">
-        <p className="leading-[1.8] mb-0">Webサイト制作はゴールではありません。 事業の成長を見据えた、</p>
-        <p className="leading-[1.8]">失敗しないための重要なチェックポイントをご紹介します。</p>
+      <div className="flex flex-col font-light justify-center leading-[0] not-italic relative shrink-0 text-[#62666c] text-[14px] lg:text-[20px] text-center w-full">
+        <p className="leading-[1.8] lg:hidden">Webサイト制作はゴールではありません。 事業の成長を見据えた、失敗しないための重要なチェックポイントをご紹介します。</p>
+        <div className="hidden lg:block">
+          <p className="leading-[1.8] mb-0">Webサイト制作はゴールではありません。 事業の成長を見据えた、</p>
+          <p className="leading-[1.8]">失敗しないための重要なチェックポイントをご紹介します。</p>
+        </div>
       </div>
     </div>
   );
@@ -3003,7 +3134,92 @@ function ReasonCard({ fill, bg, number, children }: { fill: MotionValue<number>,
   );
 }
 
-function Reason() {
+function ReasonCardStatic({ number, bg, children }: { number: string; bg: string; children: React.ReactNode }) {
+  return (
+    <div className={`${bg} content-stretch flex flex-col items-start justify-center p-[20px] relative shrink-0 w-full`} data-name="reason">
+      <div className="content-stretch flex flex-col gap-[8px] items-start leading-[0] relative shrink-0 text-[#2d3748] w-full">
+        <div className="flex flex-col font-thin justify-center relative shrink-0 text-[50px] whitespace-nowrap">
+          <p className="leading-none">{number}</p>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function ReasonMobile() {
+  return (
+    <div className="lg:hidden bg-[#f5f8fc] content-stretch flex flex-col gap-[80px] items-center px-[16px] py-[64px] relative w-full" data-name="Reason">
+      <Tlt1 />
+      <div className="bg-white content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="reason_container">
+        <ReasonCardStatic number="01" bg="bg-white">
+          <div className="flex flex-col font-extrabold justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] w-[min-content]">
+            <p className="text-[24px]">
+              <span className="leading-[1.4]">目的を「作る前」に</span>
+              <span className="leading-[1.4] text-[#137fec]">言語化</span>
+              <span className="leading-[1.4]">する</span>
+            </p>
+          </div>
+          <div className="flex flex-col font-light justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">
+            <p className="leading-[1.7]">
+              会社紹介か、問い合わせ獲得か、採用強化か。
+              <br aria-hidden="true" />
+              目的が曖昧なまま作ると、成果の出ないサイトに。
+            </p>
+          </div>
+        </ReasonCardStatic>
+        <ReasonCardStatic number="02" bg="bg-[#e9f3fd]">
+          <div className="flex flex-col font-extrabold justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] w-[min-content]">
+            <p className="text-[24px]">
+              <span className="leading-[1.4] text-[#137fec]">ユーザー視点</span>
+              <span className="leading-[1.4]">を徹底する</span>
+            </p>
+          </div>
+          <div className="flex flex-col font-light justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">
+            <p className="leading-[1.7] mb-0">「誰にでも向けたサイト」は、誰にも刺さらない。</p>
+            <p className="leading-[1.7]">ターゲットを明確にすることで、文章・デザイン・導線が一気にブレなくなります。</p>
+          </div>
+        </ReasonCardStatic>
+        <ReasonCardStatic number="03" bg="bg-white">
+          <div className="flex flex-col font-extrabold justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] w-[min-content]">
+            <p className="text-[24px]">
+              <span className="leading-[1.4]">デザインより</span>
+              <span className="leading-[1.4] text-[#137fec]">伝わる構成</span>
+              <span className="leading-[1.4]">を優先</span>
+            </p>
+          </div>
+          <div className="flex flex-col font-light justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">
+            <p className="leading-[1.7]">見た目が良くても、強みが伝わらない、行動（問い合わせ）に繋がらない、これでは意味がありません。</p>
+          </div>
+        </ReasonCardStatic>
+        <ReasonCardStatic number="04" bg="bg-[#e9f3fd]">
+          <div className="flex flex-col font-extrabold justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] w-[min-content]">
+            <p className="text-[24px]">
+              <span className="leading-[1.4]">公開後の</span>
+              <span className="leading-[1.4] text-[#137fec]">運用を前提</span>
+              <span className="leading-[1.4]">に設計する</span>
+            </p>
+          </div>
+          <div className="flex flex-col font-light justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">
+            <p className="leading-[1.7] mb-0">更新しづらいサイトは、必ず止まります。</p>
+            <p className="leading-[1.7]">自社で更新できる仕組みや、将来の拡張を考えた設計が重要です。</p>
+          </div>
+        </ReasonCardStatic>
+        <ReasonCardStatic number="05" bg="bg-white">
+          <div className="flex flex-col font-extrabold justify-center min-w-full not-italic relative shrink-0 text-[#137fec] w-[min-content]">
+            <p className="leading-[1.4] text-[24px]">「作って終わり」にしない</p>
+          </div>
+          <div className="flex flex-col font-light justify-center min-w-full not-italic relative shrink-0 text-[#2d3748] text-[16px] w-[min-content]">
+            <p className="leading-[1.7] mb-0">ホームページ制作はスタート地点。</p>
+            <p className="leading-[1.7]">公開後の改善・集客・活用まで考えてこそ、投資価値のあるサイトになります。</p>
+          </div>
+        </ReasonCardStatic>
+      </div>
+    </div>
+  );
+}
+
+function ReasonDesktop() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -3012,8 +3228,6 @@ function Reason() {
   const smooth = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
   const y = useTransform(smooth, [0, 1], ["0%", "-80%"]);
 
-  // Each card's bg fills (left → right) as it scrolls into the centered position.
-  // Card N is centered at progress (N-1)/4 of the inner travel (smooth 0→1 maps to 5 cards).
   const fill1 = useTransform(smooth, [0, 0.05], [0, 1]);
   const fill2 = useTransform(smooth, [0.05, 0.25], [0, 1]);
   const fill3 = useTransform(smooth, [0.25, 0.5], [0, 1]);
@@ -3022,7 +3236,7 @@ function Reason() {
   const fills = [fill1, fill2, fill3, fill4, fill5];
 
   return (
-    <div ref={ref} data-name="Reason" className="relative w-full" style={{ height: "500vh" }}>
+    <div ref={ref} data-name="Reason" className="hidden lg:block relative w-full" style={{ height: "500vh" }}>
       <div className="sticky top-0 h-screen bg-[#f5f8fc] content-center flex flex-wrap gap-0 items-center overflow-clip w-full">
         <Tlt1 />
         <ReasonContainer y={y} fills={fills} />
@@ -3031,9 +3245,18 @@ function Reason() {
   );
 }
 
+function Reason() {
+  return (
+    <>
+      <ReasonMobile />
+      <ReasonDesktop />
+    </>
+  );
+}
+
 function Group48() {
   return (
-    <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[960px] top-[calc(50%-41.5px)]">
+    <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[960px] top-[calc(50%-41.5px)] opacity-20 lg:opacity-100 pointer-events-none">
       <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 960 960">
         <g id="Group 22">
           <circle cx="480" cy="480" id="Ellipse 6" r="479.4" stroke="var(--stroke-0, white)" strokeWidth="1.2" />
@@ -3081,8 +3304,8 @@ function ArrowCircle2() {
 function Frame84() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col  h-[29px] items-center justify-center leading-[normal] min-h-px min-w-px not-italic relative text-[#00b5ad]">
-      <p className="relative shrink-0 font-semibold text-[20px] tracking-[0.4px] w-full">今すぐ無料相談する</p>
-      <p className="relative shrink-0 text-[12px] tracking-[0.24px] w-full">24時間受付対応 · 全国対応可能</p>
+      <p className="relative shrink-0 font-semibold text-[17.5px] tracking-[0.35px] w-full">今すぐ無料相談する</p>
+      <p className="relative shrink-0 text-[10.5px] tracking-[0.21px] w-full">24時間受付対応 · 全国対応可能</p>
     </div>
   );
 }
@@ -3102,8 +3325,8 @@ function ArrowCircle3() {
 
 function Cta1() {
   return (
-    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] shrink-0 w-[318px] block no-underline" data-name="cta">
-      <div className="content-stretch flex items-center justify-between overflow-clip pl-[32px] pr-[16px] py-[16px] relative rounded-[inherit] size-full">
+    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] block no-underline w-full max-w-[300px]" data-name="cta">
+      <div className="content-stretch flex items-center justify-between overflow-clip pl-[28px] pr-[14px] py-[14px] relative rounded-[inherit] size-full">
         <Frame84 />
         <ArrowCircle3 />
       </div>
@@ -3114,8 +3337,8 @@ function Cta1() {
 
 function Frame86() {
   return (
-    <div className="content-center flex flex-wrap gap-[24px] items-center relative shrink-0 w-full">
-      <div className="flex-[1_0_0] max-h-[100px] max-w-[400px] min-h-[80px] min-w-[320px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)]" data-name="cta">
+    <div className="content-center flex flex-wrap gap-[16px] items-center justify-center relative shrink-0 w-full">
+      <div className="max-h-[100px] min-h-[80px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)] w-full max-w-[400px] min-w-[320px] lg:flex-[1_0_0]" data-name="cta">
         <div aria-hidden="true" className="absolute bg-[#ff4343] inset-0 pointer-events-none rounded-[999px]" />
         <div className="flex flex-row items-center max-h-[inherit] max-w-[inherit] min-h-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-between max-h-[inherit] max-w-[inherit] min-h-[inherit] min-w-[inherit] pl-[32px] pr-[16px] py-[16px] relative size-full">
@@ -3133,11 +3356,20 @@ function Frame86() {
 function Frame87() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center max-w-[700px] min-w-[320px] relative shrink-0 w-full">
-      <p className=" leading-[0] not-italic relative shrink-0 text-[0px] text-center text-white tracking-[0.56px] w-full">
-        <span className="leading-[normal] text-[28px]">\まずは気軽に</span>
-        <span className="leading-[normal] text-[#ffe347] font-extrabold text-[40px]">お見積もり・ご相談</span>
-        <span className="leading-[normal] text-[28px]">ください/</span>
-      </p>
+      <div className="font-extrabold not-italic relative shrink-0 text-center text-white tracking-[0.56px] w-full">
+        {/* Mobile: 3 lines with \/ on yellow phrase */}
+        <div className="lg:hidden flex flex-col items-center">
+          <p className="leading-[1.3] text-[24px]">まずは気軽に</p>
+          <p className="leading-[1.3] text-[#ffe347] text-[32px]">\お見積もり・ご相談/</p>
+          <p className="leading-[1.3] text-[24px]">ください</p>
+        </div>
+        {/* Desktop: single line, yellow phrase larger inline */}
+        <p className="hidden lg:block leading-[1.3] text-[28px]">
+          まずは気軽に
+          <span className="text-[#ffe347] text-[40px]">お見積もり・ご相談</span>
+          ください
+        </p>
+      </div>
       <Frame86 />
     </div>
   );
@@ -4373,7 +4605,7 @@ function Text16() {
   return (
     <div className="content-stretch flex gap-[4px] items-center justify-center relative shrink-0 text-center whitespace-nowrap" data-name="text">
       <p className="font-bold leading-none relative shrink-0 text-[#137fec] text-[64px] tracking-[-2.56px]">3.6</p>
-      <p className=" leading-[1.5] not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">倍増！</p>
+      <p className="font-semibold leading-[1.5] not-italic relative shrink-0 text-[#2d3748] text-[24px] tracking-[0.48px]">倍増！</p>
     </div>
   );
 }
@@ -4399,7 +4631,7 @@ function Frame72() {
 function Frame73() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">新規顧客獲得</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">新規顧客獲得</p>
       <Frame72 />
     </div>
   );
@@ -4410,8 +4642,8 @@ function Text17() {
     <div className="content-stretch flex gap-[4px] items-center justify-center relative shrink-0 text-center whitespace-nowrap" data-name="text">
       <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[20px] tracking-[0.4px]">&nbsp;</p>
       <p className="font-bold leading-none relative shrink-0 text-[#137fec] text-[64px] tracking-[-2.56px]">1</p>
-      <p className=" leading-none not-italic relative shrink-0 text-[#137fec] text-[26px] tracking-[0.52px]">万人</p>
-      <p className=" leading-none not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">達成！</p>
+      <p className="font-extrabold leading-none not-italic relative shrink-0 text-[#137fec] text-[26px] tracking-[0.52px]">万人</p>
+      <p className="font-semibold leading-[1.5] not-italic relative shrink-0 text-[#2d3748] text-[24px] tracking-[0.48px]">達成！</p>
     </div>
   );
 }
@@ -4437,7 +4669,7 @@ function Frame75() {
 function Frame74() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">SNSフォロアー</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">SNSフォロアー</p>
       <Frame75 />
     </div>
   );
@@ -4445,7 +4677,7 @@ function Frame74() {
 
 function Frame78() {
   return (
-    <div className="content-stretch flex flex-col  items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">
+    <div className="content-stretch flex flex-col items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-semibold text-[24px] tracking-[0.48px]">
       <p className="leading-none relative shrink-0">%</p>
       <p className="leading-[1.5] relative shrink-0">成長！</p>
     </div>
@@ -4483,7 +4715,7 @@ function Frame77() {
 function Frame76() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">社名・サービス指名検索</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">社名・サービス指名検索</p>
       <Frame77 />
     </div>
   );
@@ -4491,7 +4723,7 @@ function Frame76() {
 
 function Frame81() {
   return (
-    <div className="content-stretch flex flex-col  items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">
+    <div className="content-stretch flex flex-col items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-semibold text-[24px] tracking-[0.48px]">
       <p className="leading-none relative shrink-0">%</p>
       <p className="leading-[1.5] relative shrink-0">向上！</p>
     </div>
@@ -4528,7 +4760,7 @@ function Frame80() {
 function Frame79() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">社員評価(満足度)</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">社員評価(満足度)</p>
       <Frame80 />
     </div>
   );
@@ -4536,7 +4768,7 @@ function Frame79() {
 
 function Frame106() {
   return (
-    <div className="content-stretch flex flex-col  items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">
+    <div className="content-stretch flex flex-col items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-semibold text-[24px] tracking-[0.48px]">
       <p className="leading-none relative shrink-0">%</p>
       <p className="leading-[1.5] relative shrink-0">削減！</p>
     </div>
@@ -4573,7 +4805,7 @@ function Frame105() {
 function Frame104() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">広告費</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">広告費</p>
       <Frame105 />
     </div>
   );
@@ -4581,7 +4813,7 @@ function Frame104() {
 
 function Frame112() {
   return (
-    <div className="content-stretch flex flex-col  items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">
+    <div className="content-stretch flex flex-col items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-semibold text-[24px] tracking-[0.48px]">
       <p className="leading-none relative shrink-0">%</p>
       <p className="leading-[1.5] relative shrink-0">達成！</p>
     </div>
@@ -4618,7 +4850,7 @@ function Frame111() {
 function Frame107() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">採用応募数</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">採用応募数</p>
       <Frame111 />
     </div>
   );
@@ -4626,7 +4858,7 @@ function Frame107() {
 
 function Frame121() {
   return (
-    <div className="content-stretch flex flex-col  items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-light text-[24px] tracking-[0.48px]">
+    <div className="content-stretch flex flex-col items-start justify-center not-italic relative shrink-0 text-[#2d3748] font-semibold text-[24px] tracking-[0.48px]">
       <p className="leading-none relative shrink-0">%</p>
       <p className="leading-[1.5] relative shrink-0">倍増！</p>
     </div>
@@ -4663,7 +4895,7 @@ function Frame120() {
 function Frame119() {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-[280.754px]">
-      <p className=" leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">既存顧客追加発注</p>
+      <p className="font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[22px] text-center tracking-[0.44px] w-full">既存顧客追加発注</p>
       <Frame120 />
     </div>
   );
@@ -4671,50 +4903,50 @@ function Frame119() {
 
 function Frame68() {
   return (
-    <div className="gap-x-[8px] gap-y-[8px] grid grid-cols-[repeat(4,minmax(0,1fr))] lg:grid-cols-[repeat(8,minmax(0,1fr))] grid-rows-[repeat(4,minmax(0,1fr))] lg:grid-rows-[repeat(2,minmax(0,1fr))] h-[400px] max-w-[1280px] relative shrink-0 w-full">
-      <div className="col-span-2 col-start-1 row-start-1 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+    <div className="flex flex-col gap-[8px] lg:grid lg:grid-cols-[repeat(8,minmax(0,1fr))] lg:grid-rows-[repeat(2,minmax(0,1fr))] lg:h-[400px] max-w-[1280px] relative shrink-0 w-full">
+      <div className="w-full lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame73 />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-3 row-start-1 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+      <div className="w-full lg:col-span-2 lg:col-start-3 lg:row-start-1 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame74 />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-5 row-start-1 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+      <div className="w-full lg:col-span-2 lg:col-start-5 lg:row-start-1 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame76 />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-7 row-start-1 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+      <div className="w-full lg:col-span-2 lg:col-start-7 lg:row-start-1 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame79 />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-2 row-start-2 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+      <div className="w-full lg:col-span-2 lg:col-start-2 lg:row-start-2 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame104 />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-4 row-start-2 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+      <div className="w-full lg:col-span-2 lg:col-start-4 lg:row-start-2 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame107 />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-6 row-start-2 justify-self-stretch relative self-stretch shrink-0" data-name="数字で見る">
+      <div className="w-full lg:col-span-2 lg:col-start-6 lg:row-start-2 lg:justify-self-stretch relative lg:self-stretch shrink-0" data-name="数字で見る">
         <div className="flex flex-row items-center justify-center rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-center p-[16px] relative size-full">
             <Frame119 />
@@ -4832,7 +5064,7 @@ function Process() {
 
 function Group74() {
   return (
-    <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[960px] top-[calc(50%-41.5px)]">
+    <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[960px] top-[calc(50%-41.5px)] opacity-20 lg:opacity-100 pointer-events-none">
       <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 960 960">
         <g id="Group 22">
           <circle cx="480" cy="480" id="Ellipse 6" r="479.4" stroke="var(--stroke-0, white)" strokeWidth="1.2" />
@@ -4880,8 +5112,8 @@ function ArrowCircle5() {
 function Frame130() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col  h-[29px] items-center justify-center leading-[normal] min-h-px min-w-px not-italic relative text-[#00b5ad]">
-      <p className="relative shrink-0 font-semibold text-[20px] tracking-[0.4px] w-full">今すぐ無料相談する</p>
-      <p className="relative shrink-0 text-[12px] tracking-[0.24px] w-full">24時間受付対応 · 全国対応可能</p>
+      <p className="relative shrink-0 font-semibold text-[17.5px] tracking-[0.35px] w-full">今すぐ無料相談する</p>
+      <p className="relative shrink-0 text-[10.5px] tracking-[0.21px] w-full">24時間受付対応 · 全国対応可能</p>
     </div>
   );
 }
@@ -4901,20 +5133,20 @@ function ArrowCircle6() {
 
 function Cta3() {
   return (
-    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] shrink-0 w-[318px] block no-underline" data-name="cta">
-      <div className="content-stretch flex items-center justify-between overflow-clip pl-[32px] pr-[16px] py-[16px] relative rounded-[inherit] size-full">
+    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] block no-underline w-full max-w-[300px]" data-name="cta">
+      <div className="content-stretch flex items-center justify-between overflow-clip pl-[28px] pr-[14px] py-[14px] relative rounded-[inherit] size-full">
         <Frame130 />
         <ArrowCircle6 />
       </div>
-      <div aria-hidden="true" className="absolute border-2 border-[#00b5ad] border-solid inset-0 pointer-events-none rounded-[999px]" />
+      <div aria-hidden="true" className="absolute border border-[#00b5ad] border-solid inset-0 pointer-events-none rounded-[999px]" />
     </a>
   );
 }
 
 function Frame128() {
   return (
-    <div className="content-center flex flex-wrap gap-[24px] items-center relative shrink-0 w-full">
-      <div className="flex-[1_0_0] max-h-[100px] max-w-[400px] min-h-[80px] min-w-[320px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)]" data-name="cta">
+    <div className="content-center flex flex-wrap gap-[16px] items-center justify-center relative shrink-0 w-full">
+      <div className="max-h-[100px] min-h-[80px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)] w-full max-w-[400px] min-w-[320px] lg:flex-[1_0_0]" data-name="cta">
         <div aria-hidden="true" className="absolute bg-[#ff4343] inset-0 pointer-events-none rounded-[999px]" />
         <div className="flex flex-row items-center max-h-[inherit] max-w-[inherit] min-h-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
           <div className="content-stretch flex items-center justify-between max-h-[inherit] max-w-[inherit] min-h-[inherit] min-w-[inherit] pl-[32px] pr-[16px] py-[16px] relative size-full">
@@ -4932,11 +5164,20 @@ function Frame128() {
 function Frame127() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center max-w-[700px] min-w-[320px] relative shrink-0 w-full">
-      <p className=" leading-[0] not-italic relative shrink-0 text-[0px] text-center text-white tracking-[0.56px] w-full">
-        <span className="leading-[normal] text-[28px]">\まずは気軽に</span>
-        <span className="leading-[normal] text-[#ffe347] font-extrabold text-[40px]">お見積もり・ご相談</span>
-        <span className="leading-[normal] text-[28px]">ください/</span>
-      </p>
+      <div className="font-extrabold not-italic relative shrink-0 text-center text-white tracking-[0.56px] w-full">
+        {/* Mobile: 3 lines with \/ on yellow phrase */}
+        <div className="lg:hidden flex flex-col items-center">
+          <p className="leading-[1.3] text-[24px]">まずは気軽に</p>
+          <p className="leading-[1.3] text-[#ffe347] text-[32px]">\お見積もり・ご相談/</p>
+          <p className="leading-[1.3] text-[24px]">ください</p>
+        </div>
+        {/* Desktop: single line, yellow phrase larger inline */}
+        <p className="hidden lg:block leading-[1.3] text-[28px]">
+          まずは気軽に
+          <span className="text-[#ffe347] text-[40px]">お見積もり・ご相談</span>
+          ください
+        </p>
+      </div>
       <Frame128 />
     </div>
   );
@@ -6059,10 +6300,95 @@ function Table() {
   );
 }
 
+function ScrollableTable() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [hintVisible, setHintVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    const onDown = (e: MouseEvent) => {
+      isDown = true;
+      el.style.cursor = "grabbing";
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+    };
+    const onUp = () => {
+      isDown = false;
+      el.style.cursor = "grab";
+    };
+    const onMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - el.offsetLeft;
+      el.scrollLeft = scrollLeft - (x - startX);
+    };
+    const hideHint = () => {
+      if (el.scrollLeft > 8) setHintVisible(false);
+    };
+
+    el.addEventListener("mousedown", onDown);
+    el.addEventListener("mouseleave", onUp);
+    el.addEventListener("mouseup", onUp);
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("scroll", hideHint, { passive: true });
+    el.addEventListener("touchstart", () => setHintVisible(false), { passive: true });
+
+    return () => {
+      el.removeEventListener("mousedown", onDown);
+      el.removeEventListener("mouseleave", onUp);
+      el.removeEventListener("mouseup", onUp);
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("scroll", hideHint);
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full">
+      <div
+        ref={containerRef}
+        className="overflow-x-auto overflow-y-hidden lg:overflow-visible select-none lg:select-auto"
+        style={{ cursor: "grab", WebkitOverflowScrolling: "touch" }}
+      >
+        <div className="w-[1200px] lg:w-full">
+          <Table />
+        </div>
+      </div>
+      {/* Scroll hint — mobile only, fades on first interaction */}
+      <div
+        className={`lg:hidden pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
+          hintVisible ? "opacity-100" : "opacity-0"
+        }`}
+        aria-hidden="true"
+      >
+        <div className="bg-[rgba(45,55,72,0.78)] rounded-[16px] px-[32px] py-[24px] flex flex-col items-center gap-[8px] text-white">
+          <div className="flex items-center gap-[12px]">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+            <span className="material-icons text-[40px]" style={{ fontFamily: "Material Icons" }}>
+              touch_app
+            </span>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+            </svg>
+          </div>
+          <p className="font-bold text-[18px] italic tracking-wide">scrollable</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TableComment() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center relative rounded-[16px] shrink-0 w-full lg:w-[1200px]" data-name="table+comment">
-      <Table />
+      <ScrollableTable />
       <div className="flex flex-col  justify-center leading-[0] not-italic relative shrink-0 text-[#2d3748] text-[14px] w-full">
         <p className="leading-[1.5] mb-0">※ 各プランの内容は最低構成となります。</p>
         <p className="leading-[1.5] mb-0">※ 作業内容・ボリュームにより対応範囲が異なる場合があります。</p>
@@ -6610,8 +6936,8 @@ function Group75() {
 
 function Deco1() {
   return (
-    <div className="h-[130px] relative shrink-0 w-[200px]" data-name="deco">
-      <Group75 />
+    <div className="shrink-0 w-[200px] aspect-[402/265] relative" data-name="deco">
+      <img alt="ここまでやります" src={imgDeco} className="absolute inset-0 size-full object-contain" />
     </div>
   );
 }
@@ -6692,12 +7018,12 @@ interface AccordionItemProps {
 
 function AccordionItem({ question, answer, open, onToggle }: AccordionItemProps) {
   return (
-    <div className="content-stretch flex flex-col items-start relative w-full lg:w-[1280px]">
+    <div className="content-stretch flex flex-col items-start relative w-full">
       <div
-        className={`bg-white content-stretch flex gap-[8px] items-center px-[16px] py-[20px] relative rounded-[8px] shrink-0 w-full cursor-pointer transition-colors border border-solid ${
+        className={`bg-white content-stretch flex gap-[8px] items-center px-[16px] py-[20px] relative rounded-[8px] shrink-0 w-full cursor-pointer transition-colors border-2 border-solid box-border ${
           open
             ? 'border-[#137fec] text-[#137fec]'
-            : 'border-[#eaeaea] text-[#2d3748] hover:bg-[#fafafa]'
+            : 'border-[#eaeaea] text-[#2d3748] hover:border-[#bec3cf]'
         }`}
         data-name="arccordion"
         onClick={onToggle}
@@ -6771,7 +7097,7 @@ function Frame154() {
   ];
 
   return (
-    <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0">
+    <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full max-w-[1280px]">
       <style>{`
         @keyframes slideDown {
           from {
@@ -6811,7 +7137,7 @@ function Faq() {
 
 function Group76() {
   return (
-    <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[960px] top-1/2">
+    <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[960px] top-1/2 opacity-20 lg:opacity-100 pointer-events-none">
       <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 960 960">
         <g id="Group 22">
           <circle cx="480" cy="480" id="Ellipse 6" r="479.4" stroke="var(--stroke-0, white)" strokeWidth="1.2" />
@@ -6824,13 +7150,22 @@ function Group76() {
 
 function Frame155() {
   return (
-    <div className="content-stretch flex flex-col gap-[8px] items-center relative shrink-0">
-      <p className=" leading-[0] not-italic relative shrink-0 text-[0px] text-center text-white tracking-[0.56px] whitespace-nowrap">
-        <span className="leading-[normal] text-[28px]">まずは気軽に</span>
-        <span className="leading-[normal] text-[#ffe347] font-extrabold text-[40px]">お見積もり・ご相談</span>
-        <span className="leading-[normal] text-[28px]">ください</span>
-      </p>
-      <div className="h-[34px] relative shrink-0 w-[666px]">
+    <div className="content-stretch flex flex-col gap-[8px] items-center relative shrink-0 w-full max-w-[700px] px-[16px]">
+      <div className="font-extrabold not-italic relative shrink-0 text-center text-white tracking-[0.56px] w-full">
+        {/* Mobile: 3 lines with \/ on yellow phrase */}
+        <div className="lg:hidden flex flex-col items-center">
+          <p className="leading-[1.3] text-[24px]">まずは気軽に</p>
+          <p className="leading-[1.3] text-[#ffe347] text-[32px]">\お見積もり・ご相談/</p>
+          <p className="leading-[1.3] text-[24px]">ください</p>
+        </div>
+        {/* Desktop: single line, yellow phrase larger inline */}
+        <p className="hidden lg:block leading-[1.3] text-[28px]">
+          まずは気軽に
+          <span className="text-[#ffe347] text-[40px]">お見積もり・ご相談</span>
+          ください
+        </p>
+      </div>
+      <div className="hidden lg:block h-[34px] relative shrink-0 w-full max-w-[666px]">
         <div className="absolute inset-[-5.88%_-0.3%_-11.49%_-0.3%]">
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 670 39.9083">
             <path d={svgPaths.p3a4bc980} id="Vector 10" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeWidth="4" />
@@ -6877,7 +7212,7 @@ function ArrowCircle8() {
 
 function Frame157() {
   return (
-    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-center min-h-px min-w-px relative">
+    <div className="content-stretch flex flex-col gap-[16px] items-center min-h-px min-w-px relative w-full lg:flex-[1_0_0] lg:w-auto">
       <p className="font-['Hiragino_Kaku_Gothic_Std',sans-serif] font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[28px] text-center tracking-[0.56px] w-full">まずは資料がみたい</p>
       <div className="max-h-[100px] max-w-[400px] min-h-[80px] min-w-[320px] relative rounded-[999px] shadow-[0px_2px_8px_0px_rgba(158,36,36,0.16),0px_4px_16px_0px_rgba(158,36,36,0.08)] shrink-0 w-full" data-name="cta">
         <div aria-hidden="true" className="absolute bg-[#ff4343] inset-0 pointer-events-none rounded-[999px]" />
@@ -7143,9 +7478,10 @@ function Image10() {
 
 function SectionCta1() {
   return (
-    <div className="bg-white flex-[1_0_0] max-w-[1440px] min-h-px min-w-[320px] relative rounded-[16px]" data-name="section_cta">
-      <div className="flex flex-row items-center justify-center max-w-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
-        <div className="content-stretch flex gap-[16px] items-center justify-center max-w-[inherit] min-w-[inherit] pt-[16px] px-[16px] relative size-full">
+    <div className="bg-white w-full max-w-[1440px] min-h-px min-w-[320px] relative rounded-[16px] lg:flex-[1_0_0]" data-name="section_cta">
+      <div className="relative flex flex-row items-center justify-center max-w-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
+        <div aria-hidden="true" className="pointer-events-none absolute size-[500px] rounded-full bg-[#FFF1EE]" style={{ left: "-122px", top: "-130px" }} />
+        <div className="content-stretch flex flex-col lg:flex-row gap-[16px] items-center justify-center max-w-[inherit] min-w-[inherit] pt-[16px] px-[16px] relative size-full z-10">
           <Frame157 />
           <Image10 />
         </div>
@@ -7157,8 +7493,8 @@ function SectionCta1() {
 function Frame160() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col  items-center leading-[normal] min-h-px min-w-px not-italic relative text-[#00b5ad]">
-      <p className="relative shrink-0 font-semibold text-[20px] tracking-[0.4px] w-full">今すぐ無料相談する</p>
-      <p className="relative shrink-0 text-[12px] tracking-[0.24px] w-full">24時間受付対応 · 全国対応可能</p>
+      <p className="relative shrink-0 font-semibold text-[17.5px] tracking-[0.35px] w-full">今すぐ無料相談する</p>
+      <p className="relative shrink-0 text-[10.5px] tracking-[0.21px] w-full">24時間受付対応 · 全国対応可能</p>
     </div>
   );
 }
@@ -7178,20 +7514,20 @@ function ArrowCircle9() {
 
 function Cta4() {
   return (
-    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] shrink-0 w-full lg:w-[320px] block no-underline" data-name="cta">
-      <div className="content-stretch flex items-center justify-between overflow-clip pl-[32px] pr-[16px] py-[16px] relative rounded-[inherit] size-full">
+    <a href="tel:0120-269-046" className="bg-white relative rounded-[999px] block no-underline w-full max-w-[300px]" data-name="cta">
+      <div className="content-stretch flex items-center justify-between overflow-clip pl-[28px] pr-[14px] py-[14px] relative rounded-[inherit] size-full">
         <Frame160 />
         <ArrowCircle9 />
       </div>
-      <div aria-hidden="true" className="absolute border-2 border-[#00b5ad] border-solid inset-0 pointer-events-none rounded-[999px]" />
+      <div aria-hidden="true" className="absolute border border-[#00b5ad] border-solid inset-0 pointer-events-none rounded-[999px]" />
     </a>
   );
 }
 
 function Frame159() {
   return (
-    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-center min-h-px min-w-px relative">
-      <p className="font-['Hiragino_Kaku_Gothic_Std',sans-serif] font-extrabold leading-[normal] min-w-full not-italic relative shrink-0 text-[#2d3748] text-[28px] text-center tracking-[0.56px] w-[min-content]">話を聞いてみたい</p>
+    <div className="content-stretch flex flex-col gap-[16px] items-center min-h-px min-w-px relative w-full lg:flex-[1_0_0] lg:w-auto">
+      <p className="font-['Hiragino_Kaku_Gothic_Std',sans-serif] font-extrabold leading-[normal] not-italic relative shrink-0 text-[#2d3748] text-[28px] text-center tracking-[0.56px] w-full">話を聞いてみたい</p>
       <Cta4 />
     </div>
   );
@@ -7397,9 +7733,10 @@ function Image11() {
 
 function SectionCta2() {
   return (
-    <div className="bg-white flex-[1_0_0] max-w-[1440px] min-h-px min-w-[320px] relative rounded-[16px]" data-name="section_cta">
-      <div className="flex flex-row items-center justify-center max-w-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
-        <div className="content-stretch flex gap-[16px] items-center justify-center max-w-[inherit] min-w-[inherit] pt-[16px] px-[16px] relative size-full">
+    <div className="bg-white w-full max-w-[1440px] min-h-px min-w-[320px] relative rounded-[16px] lg:flex-[1_0_0]" data-name="section_cta">
+      <div className="relative flex flex-row items-center justify-center max-w-[inherit] min-w-[inherit] overflow-clip rounded-[inherit] size-full">
+        <div aria-hidden="true" className="pointer-events-none absolute size-[500px] rounded-full bg-[#E8F7F4]" style={{ left: "-122px", top: "-130px" }} />
+        <div className="content-stretch flex flex-col lg:flex-row gap-[16px] items-center justify-center max-w-[inherit] min-w-[inherit] pt-[16px] px-[16px] relative size-full z-10">
           <Frame159 />
           <Image11 />
         </div>
@@ -7410,7 +7747,7 @@ function SectionCta2() {
 
 function Frame156() {
   return (
-    <div className="content-stretch flex flex-col lg:flex-row gap-[16px] lg:gap-[32px] items-center max-w-[1280px] px-[16px] lg:px-0 relative shrink-0 w-full">
+    <div className="content-stretch flex flex-col lg:flex-row gap-[32px] items-stretch lg:items-center justify-center max-w-[1280px] px-[16px] lg:px-0 relative shrink-0 w-full">
       <SectionCta1 />
       <SectionCta2 />
     </div>
@@ -7452,7 +7789,13 @@ function Main() {
 }
 
 function Frame() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const scrollTo = (name: string) => {
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: name } });
+      return;
+    }
     const el = document.querySelector(`[data-name="${name}"]`);
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.scrollY - 80; // offset for sticky header
@@ -7519,25 +7862,46 @@ function Frame161() {
   );
 }
 
-function Header() {
+export function Header({ minimal = false }: { minimal?: boolean } = {}) {
   return (
-    <div className="bg-white content-stretch flex gap-[8px] h-[56px] lg:h-[80px] items-center justify-between lg:justify-start pointer-events-auto px-[16px] lg:px-[100px] sticky top-0 w-full" data-name="Header">
-      <div className="h-[31px] lg:h-[41px] max-h-[41px] max-w-[160px] min-h-[31px] min-w-[120.97561645507812px] relative shrink-0 w-[121px] lg:w-[160px]" data-name="logo">
+    <div className="bg-white content-stretch flex gap-[8px] h-[56px] lg:h-[80px] items-center justify-between lg:justify-start pointer-events-auto px-[16px] lg:px-[100px] sticky top-0 w-full z-50" data-name="Header">
+      <a href="/" className="h-[31px] lg:h-[41px] max-h-[41px] max-w-[160px] min-h-[31px] min-w-[120.97561645507812px] relative shrink-0 w-[121px] lg:w-[160px] block" data-name="logo">
         <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
           <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgLogo} />
         </div>
-      </div>
-      <div className="hidden lg:contents">
-        <Frame />
-      </div>
-      <Frame161 />
+      </a>
+      {minimal ? (
+        <div className="ml-auto relative flex flex-col items-center justify-center gap-[4px]">
+          <div className="hidden lg:flex items-center relative shrink-0">
+            <a href="tel:0120-269-046" className="flex items-center gap-[4px] no-underline">
+              <span className="material-icons text-[18px] text-[#00b5ad]" style={{ fontFamily: "Material Icons" }}>call</span>
+              <span className="font-extrabold text-[#00b5ad] text-[16px] tracking-[0.32px] whitespace-nowrap" style={{ fontFamily: "'Lexend', sans-serif" }}>0120-269-046</span>
+            </a>
+          </div>
+          <a
+            href="tel:0120-269-046"
+            className="bg-white border border-[#00b5ad] border-solid flex flex-col h-[46px] lg:h-[54px] items-center justify-center overflow-clip rounded-[613.023px] shrink-0 text-[#00b5ad] w-[120px] lg:w-[140px] no-underline whitespace-nowrap hover:bg-[#00b5ad] hover:text-white transition-colors"
+            data-name="cta"
+          >
+            <p className="font-semibold text-[14px] tracking-[0.28px] leading-none">無料相談</p>
+            <p className="text-[10px] tracking-[0.2px] leading-none mt-[4px]">24時間受付</p>
+          </a>
+        </div>
+      ) : (
+        <>
+          <div className="hidden lg:contents">
+            <Frame />
+          </div>
+          <Frame161 />
+        </>
+      )}
     </div>
   );
 }
 
 function Frame11() {
   return (
-    <div className="content-end flex flex-wrap font-['Inter:Medium','Noto_Sans_JP:Medium',sans-serif] font-medium gap-[26px_24px] items-end leading-[1.3] not-italic relative shrink-0 text-[#9da4b5] text-[14px] text-center w-[482px] whitespace-nowrap">
+    <div className="content-end flex flex-wrap font-['Inter:Medium','Noto_Sans_JP:Medium',sans-serif] font-medium gap-[16px_24px] lg:gap-[26px_24px] items-end leading-[1.3] not-italic relative shrink-0 text-[#62666c] text-[14px] text-center w-full lg:w-[482px] whitespace-nowrap">
       <a className="relative shrink-0 underline" href="https://www.vision-net.co.jp/company/com_data.html" target="_blank" rel="noopener noreferrer">会社案内・IR情報</a>
       <a className="relative shrink-0 underline" href="https://www.vision-net.co.jp/company/com_list.html" target="_blank" rel="noopener noreferrer">拠点一覧</a>
       <a className="relative shrink-0 underline" href="https://homepage296.com/company#terms" target="_blank" rel="noopener noreferrer">特定商品取引法に基づく記載</a>
@@ -7549,7 +7913,7 @@ function Frame11() {
 
 function Footer1() {
   return (
-    <div className="content-start flex flex-wrap gap-[16px_24px] items-start max-w-[600px] relative shrink-0" data-name="footer">
+    <div className="content-start flex flex-wrap gap-[16px_24px] items-start w-full lg:flex-[1_0_0] max-w-[600px] min-w-[280px] relative" data-name="footer">
       <div className="h-[28.421px] relative shrink-0 w-[240px]" data-name="image 7">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage15} />
       </div>
@@ -7576,7 +7940,7 @@ function Frame8() {
 
 function Frame9() {
   return (
-    <div className="content-stretch flex gap-[24px] items-start relative shrink-0">
+    <div className="content-center lg:content-stretch flex flex-wrap lg:flex-nowrap gap-[24px] items-center lg:items-start justify-center lg:justify-start w-full lg:w-auto lg:shrink-0 relative">
       <div className="h-[64px] relative shrink-0 w-[176.552px]" data-name="image 4">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage16} />
       </div>
@@ -7591,7 +7955,7 @@ function Frame9() {
 
 function Frame10() {
   return (
-    <div className="content-stretch flex flex-col lg:flex-row items-start justify-between max-w-[1200px] px-[16px] lg:px-0 relative shrink-0 w-full">
+    <div className="content-start flex flex-col lg:flex-row lg:flex-nowrap gap-y-[40px] items-start justify-between max-w-[1200px] px-[16px] lg:px-0 relative shrink-0 w-full">
       <div aria-hidden="true" className="absolute border-[#eff0f3] border-b border-solid inset-0 pointer-events-none" />
       <Footer1 />
       <Frame9 />
@@ -7603,8 +7967,8 @@ function Frame162() {
   return (
     <div className="bg-white content-stretch flex flex-col gap-[16px] items-center pb-[16px] pt-[40px] relative shrink-0 w-full">
       <Frame10 />
-      <div className="h-[90px] relative shrink-0 w-full max-w-[450px]" data-name="image 8">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage19} />
+      <div className="aspect-[450/90] lg:aspect-auto lg:h-[90px] relative shrink-0 w-full lg:w-[450px] max-w-[450px] px-[16px] lg:px-0" data-name="image 8">
+        <img alt="" className="absolute inset-0 object-contain lg:object-cover pointer-events-none size-full" src={imgImage19} />
       </div>
     </div>
   );
@@ -7636,14 +8000,20 @@ function Pre() {
 
 function Logo() {
   return (
-    <div className="bg-white h-[72px] relative shrink-0 w-[204px]" data-name="logo">
+    <a
+      href="https://denwa-hikari.com/?ref=homepage29"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white h-[72px] relative shrink-0 w-[204px] block cursor-pointer transition-opacity hover:opacity-80"
+      data-name="logo"
+    >
       <div className="content-stretch flex flex-col items-center justify-center overflow-clip p-[8px] relative rounded-[inherit] size-full">
         <div className="h-[40px] relative shrink-0 w-full">
-          <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgRectangle27} />
+          <img alt="ひかり電話.com" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgRectangle27} />
         </div>
       </div>
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-0 pointer-events-none" />
-    </div>
+    </a>
   );
 }
 
@@ -7658,14 +8028,20 @@ function LogoWithName() {
 
 function Logo1() {
   return (
-    <div className="bg-white h-[72px] relative shrink-0 w-[204px]" data-name="logo">
+    <a
+      href="https://copyki-pr.com/lease?ref=homepage29"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white h-[72px] relative shrink-0 w-[204px] block cursor-pointer transition-opacity hover:opacity-80"
+      data-name="logo"
+    >
       <div className="content-stretch flex flex-col items-center justify-center overflow-clip p-[8px] relative rounded-[inherit] size-full">
         <div className="h-[40px] relative shrink-0 w-full">
-          <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoCopicom} />
+          <img alt="コピー機ドットコム" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoCopicom} />
         </div>
       </div>
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-0 pointer-events-none" />
-    </div>
+    </a>
   );
 }
 
@@ -7680,14 +8056,20 @@ function LogoWithName1() {
 
 function Logo2() {
   return (
-    <div className="bg-white h-[72px] relative shrink-0 w-[204px]" data-name="logo">
+    <a
+      href="https://houjin-keitai.com/?ref=homepage296"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white h-[72px] relative shrink-0 w-[204px] block cursor-pointer transition-opacity hover:opacity-80"
+      data-name="logo"
+    >
       <div className="content-stretch flex flex-col items-center justify-center overflow-clip p-[8px] relative rounded-[inherit] size-full">
         <div className="h-[40px] relative shrink-0 w-full">
-          <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoHojin} />
+          <img alt="法人携帯ドットコム" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoHojin} />
         </div>
       </div>
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-0 pointer-events-none" />
-    </div>
+    </a>
   );
 }
 
@@ -7702,14 +8084,20 @@ function LogoWithName2() {
 
 function Logo3() {
   return (
-    <div className="bg-white h-[72px] relative shrink-0 w-[204px]" data-name="logo">
+    <a
+      href="https://biziphone.com/?ref=homepage29"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white h-[72px] relative shrink-0 w-[204px] block cursor-pointer transition-opacity hover:opacity-80"
+      data-name="logo"
+    >
       <div className="content-stretch flex flex-col items-center justify-center overflow-clip p-[8px] relative rounded-[inherit] size-full">
         <div className="h-[75px] relative shrink-0 w-[167px]">
-          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgBizfonLogo} />
+          <img alt="ビジフォン.com" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgBizfonLogo} />
         </div>
       </div>
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-0 pointer-events-none" />
-    </div>
+    </a>
   );
 }
 
@@ -7724,14 +8112,20 @@ function LogoWithName3() {
 
 function Logo4() {
   return (
-    <div className="bg-white h-[72px] relative shrink-0 w-[204px]" data-name="logo">
+    <a
+      href="https://denwa-kanyuken.com/?ref=homepage296"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white h-[72px] relative shrink-0 w-[204px] block cursor-pointer transition-opacity hover:opacity-80"
+      data-name="logo"
+    >
       <div className="content-stretch flex flex-col items-center justify-center overflow-clip p-[8px] relative rounded-[inherit] size-full">
         <div className="h-[40px] relative shrink-0 w-full">
-          <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoDenwakanyuken} />
+          <img alt="電話加入権ドットコム" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoDenwakanyuken} />
         </div>
       </div>
       <div aria-hidden="true" className="absolute border border-[#eaeaea] border-solid inset-0 pointer-events-none" />
-    </div>
+    </a>
   );
 }
 
@@ -7850,21 +8244,34 @@ function Next() {
 }
 
 function LogoWrapper() {
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 212, behavior: "smooth" });
+  };
   return (
     <div className="bg-[#eff0f3] relative shrink-0 w-full" data-name="logo-wrapper">
       <div className="flex flex-row items-center justify-center size-full">
-        <div className="content-stretch flex gap-[8px] items-center justify-center px-[16px] lg:px-[400px] py-[16px] relative size-full">
-          <div className="flex flex-row items-center self-stretch lg:hidden">
-            <div className="flex h-full items-center justify-center relative shrink-0">
-              <div className="-scale-y-100 flex-none h-full rotate-180">
-                <Pre />
-              </div>
+        <div className="content-stretch flex gap-[8px] items-center justify-center px-0 lg:px-[400px] py-[16px] relative size-full">
+          <button type="button" aria-label="前へ" onClick={() => scrollBy(-1)} className="flex flex-row items-stretch self-stretch lg:hidden cursor-pointer">
+            <Pre />
+          </button>
+          <div ref={scrollRef} className="flex-1 lg:flex-none overflow-x-auto lg:overflow-clip scroll-smooth lg:w-[1048px] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden" data-name="inner">
+            <div className="flex gap-[8px] items-center w-max lg:w-[1048px]" style={{ scrollSnapType: "x mandatory" }}>
+              <LogoWithName />
+              <LogoWithName3 />
+              <LogoWithName1 />
+              <LogoWithName2 />
+              <LogoWithName4 />
+              <LogoWithName5 />
+              <LogoWithName6 />
+              <LogoWithName7 />
             </div>
           </div>
-          <Inner15 />
-          <div className="flex flex-row items-center self-stretch lg:hidden">
+          <button type="button" aria-label="次へ" onClick={() => scrollBy(1)} className="flex flex-row items-stretch self-stretch lg:hidden cursor-pointer">
             <Next />
-          </div>
+          </button>
         </div>
       </div>
     </div>
@@ -7874,17 +8281,15 @@ function LogoWrapper() {
 function Frame12() {
   return (
     <div className="bg-[#344f6e] relative shrink-0 w-full">
-      <div className="flex flex-row items-center size-full">
-        <div className="content-stretch flex font-medium items-center justify-between leading-[1.4] not-italic px-[160px] py-[12px] relative size-full text-[11px] text-center text-white whitespace-nowrap">
-          <p className="font-['Inter:Medium',sans-serif] relative shrink-0">Copyright© 2026 Vision Inc.All Rights Reserved.</p>
-          <p className="font-['Inter:Medium','Noto_Sans_JP:Medium',sans-serif] relative shrink-0">ホームページ.comで使用している写真・テキスト・画像の無断転載・無断複製を一切禁じます。</p>
-        </div>
+      <div className="content-stretch flex flex-col lg:flex-row font-medium gap-[12px] lg:gap-0 items-start lg:items-center justify-start lg:justify-between leading-[1.4] not-italic px-[16px] lg:px-[160px] py-[12px] relative text-[12px] lg:text-[11px] text-left lg:text-center text-white w-full">
+        <p className="font-['Inter:Medium',sans-serif] relative shrink-0 lg:whitespace-nowrap">Copyright© 2026 Vision Inc.All Rights Reserved.</p>
+        <p className="font-['Inter:Medium','Noto_Sans_JP:Medium',sans-serif] relative shrink-0 lg:whitespace-nowrap">ホームページ.comで使用している写真・テキスト・画像の無断転載・無断複製を一切禁じます。</p>
       </div>
     </div>
   );
 }
 
-function Footer() {
+export function Footer() {
   return (
     <div className="bg-[#eff0f3] content-stretch flex flex-col items-center justify-center overflow-clip relative shrink-0 w-full" data-name="footer">
       <Frame162 />

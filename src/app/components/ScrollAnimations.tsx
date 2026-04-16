@@ -92,30 +92,42 @@ function applyTextSplitAnimation(container: HTMLElement) {
 
   heroTexts.forEach((el, i) => {
     const htmlEl = el as HTMLElement;
-    const text = htmlEl.textContent || "";
-    if (!text.trim()) return;
-
-    // Split into characters
-    const chars = text.split("");
-    htmlEl.innerHTML = "";
+    if (!(htmlEl.textContent || "").trim()) return;
     htmlEl.style.overflow = "hidden";
 
-    chars.forEach((char, charIndex) => {
-      const span = document.createElement("span");
-      span.textContent = char === " " ? "\u00A0" : char;
-      span.style.display = "inline-block";
-      span.style.opacity = "0";
-      span.style.transform = "translateY(100%)";
-      span.style.transition = `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${(i * 0.1 + charIndex * 0.03)}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${(i * 0.1 + charIndex * 0.03)}s`;
-      htmlEl.appendChild(span);
-    });
+    let globalCharIndex = 0;
+    const splitNode = (node: Node, parent: HTMLElement) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent || "";
+        text.split("").forEach((char) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char;
+          span.style.display = "inline-block";
+          span.style.opacity = "0";
+          span.style.transform = "translateY(100%)";
+          const delay = i * 0.1 + globalCharIndex * 0.03;
+          span.style.transition = `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s`;
+          parent.appendChild(span);
+          globalCharIndex++;
+        });
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const src = node as HTMLElement;
+        const wrapper = src.cloneNode(false) as HTMLElement;
+        Array.from(src.childNodes).forEach((child) => splitNode(child, wrapper));
+        parent.appendChild(wrapper);
+      }
+    };
+
+    const children = Array.from(htmlEl.childNodes);
+    htmlEl.innerHTML = "";
+    children.forEach((child) => splitNode(child, htmlEl));
   });
 
   // Trigger after a short delay
   requestAnimationFrame(() => {
     setTimeout(() => {
       heroTexts.forEach((el) => {
-        const spans = (el as HTMLElement).querySelectorAll("span");
+        const spans = (el as HTMLElement).querySelectorAll("span:not(:has(span))");
         spans.forEach((span) => {
           span.style.opacity = "1";
           span.style.transform = "translateY(0)";
@@ -133,20 +145,33 @@ function applyTextSplitAnimation(container: HTMLElement) {
     const htmlEl = el as HTMLElement;
     const text = htmlEl.textContent || "";
     if (!text.trim() || text.length > 50) return;
-
-    const chars = text.split("");
-    htmlEl.innerHTML = "";
     htmlEl.style.overflow = "hidden";
 
-    chars.forEach((char, charIndex) => {
-      const span = document.createElement("span");
-      span.textContent = char === " " ? "\u00A0" : char;
-      span.style.display = "inline-block";
-      span.style.opacity = "0";
-      span.style.transform = "translateY(100%)";
-      span.style.transition = `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${charIndex * 0.03}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${charIndex * 0.03}s`;
-      htmlEl.appendChild(span);
-    });
+    let globalCharIndex = 0;
+    const splitNode = (node: Node, parent: HTMLElement) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        (node.textContent || "").split("").forEach((char) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char;
+          span.style.display = "inline-block";
+          span.style.opacity = "0";
+          span.style.transform = "translateY(100%)";
+          const delay = globalCharIndex * 0.03;
+          span.style.transition = `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s`;
+          parent.appendChild(span);
+          globalCharIndex++;
+        });
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const src = node as HTMLElement;
+        const wrapper = src.cloneNode(false) as HTMLElement;
+        Array.from(src.childNodes).forEach((child) => splitNode(child, wrapper));
+        parent.appendChild(wrapper);
+      }
+    };
+
+    const children = Array.from(htmlEl.childNodes);
+    htmlEl.innerHTML = "";
+    children.forEach((child) => splitNode(child, htmlEl));
   });
 
   const titleObserver = new IntersectionObserver(
